@@ -34,7 +34,33 @@ const CreateUser = async(req, res) => {
 }
 
 const UpdateUser = async (req, res) =>{
+    const id = req.params.id;
+    const {email} = req.body;
+    try{
+    const checkIdU = await pool.query(queries.CHECKID, [id]);
 
+    if(checkIdU.rows == ''){
+        
+    const checkEmailU = await pool.query(queries.CHECKEMAIL, [email]);
+
+    if(checkEmailU.rows == ''){
+        
+    await pool.query('BEGIN');
+    const response = await pool.query(queries.UPDATE_USER, [email, id]);
+    console.log(response.rows);
+    res.status(200).send(`User ${id} updated!`)
+    }else{
+        res.status(400).send('This email already Exist!')
+    }
+
+    }else{
+        res.status(400).send(`User Id ${id} not found!`)
+    }
+    }catch(err){
+        await pool.query('ROLLBACK');
+        res.status(500).send('Server Error!');
+        throw err;
+    }
 }
 
 const DeleteUser = async (req, res) =>{
