@@ -17,7 +17,7 @@ const CreateUser = async(req, res) => {
                     const salt = bcrypt.genSaltSync(12);
                     const HashPass = bcrypt.hashSync(password, salt);
                     const response = await pool.query(queries.CREATE_USER, [name, username, email, HashPass]);
-                    console.log(checkUser.rows);
+                    console.log(response.rows);
                     res.status(200).send('User Created!')
                     await pool.query('COMMIT');
                 }else{
