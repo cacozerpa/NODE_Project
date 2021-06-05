@@ -69,6 +69,26 @@ const UpdateUser = async (req, res) =>{
 
 const DeleteUser = async (req, res) =>{
 
+    try{
+    await pool.query('BEGIN');
+    const id = req.params.id;
+    const checkIdD = await pool.query(queries.CHECKID, [id]);
+
+    if(checkIdD.rows != ''){
+
+    const response = await pool.query(queries.DELETE_USER, [id]);
+    await pool.query('COMMIT');
+    console.log(response);
+    res.status(200).send(`User ${id} Deleted!`)
+    }else{
+        res.status(400).send(`User Id ${id} not found!`);
+    }
+
+    }catch(err){
+        await pool.query('ROLLBACK');
+        res.status(500).send('Server Error!');
+        throw err;
+    }
 }
 
 module.exports = {
