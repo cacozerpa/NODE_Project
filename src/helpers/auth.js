@@ -34,26 +34,30 @@ const CreateUser = async(req, res) => {
 }
 
 const UpdateUser = async (req, res) =>{
+  
+    try{ 
+    await pool.query('BEGIN'); 
     const id = req.params.id;
     const {email} = req.body;
-    try{
+    
     const checkIdU = await pool.query(queries.CHECKID, [id]);
-
-    if(checkIdU.rows == ''){
-        
     const checkEmailU = await pool.query(queries.CHECKEMAIL, [email]);
 
-    if(checkEmailU.rows == ''){
+    if(checkIdU.rows != ''){
+        if(checkEmailU.rows == ''){
         
-    await pool.query('BEGIN');
+    
     const response = await pool.query(queries.UPDATE_USER, [email, id]);
     console.log(response.rows);
     res.status(200).send(`User ${id} updated!`)
-    }else{
+    await pool.query('COMMIT');
+        }else{
+        console.log(checkEmailU.rows);
         res.status(400).send('This email already Exist!')
     }
 
     }else{
+        console.log(checkIdU.rows);
         res.status(400).send(`User Id ${id} not found!`)
     }
     }catch(err){
