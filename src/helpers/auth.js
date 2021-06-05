@@ -5,7 +5,6 @@ const queries = require('../utils/queries');
 const CreateUser = async(req, res) => {
 
     const {name, username, email, password} = req.body;
-
     
         try{
             const checkUser = await pool.query(queries.CHECKUSER, [username]);
@@ -34,6 +33,16 @@ const CreateUser = async(req, res) => {
     
 }
 
+const UpdateUser = async (req, res) =>{
+
+}
+
+const DeleteUser = async (req, res) =>{
+
+}
+
 module.exports = {
     CreateUser,
+    UpdateUser,
+    DeleteUser
 }
