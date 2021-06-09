@@ -1,8 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config({path:'../.env'});
+
 const AuthRoutes = require('./routes/auth');
 const UserRoutes = require('./routes/user');
-require('dotenv').config({path:'../.env'});
+const AuthProdRoutes = require('./routes/authproduct');
+
 
 const app = express();
 app.use(express.json());
@@ -16,6 +19,7 @@ console.log(`App Running on port: ${PORT}`);
 
 app.use(AuthRoutes);
 app.use(UserRoutes);
+app.use(AuthProdRoutes);
 
 app.get('/', (req, res) => {
     res.render('../public/index.html');
