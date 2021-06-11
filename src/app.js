@@ -5,6 +5,7 @@ require('dotenv').config({path:'../.env'});
 const AuthRoutes = require('./routes/auth');
 const UserRoutes = require('./routes/user');
 const AuthProdRoutes = require('./routes/authproduct');
+const ProductRoutes = require('./routes/product')
 
 
 const app = express();
@@ -20,6 +21,7 @@ console.log(`App Running on port: ${PORT}`);
 app.use(AuthRoutes);
 app.use(UserRoutes);
 app.use(AuthProdRoutes);
+app.use(ProductRoutes);
 
 app.get('/', (req, res) => {
     res.render('../public/index.html');
