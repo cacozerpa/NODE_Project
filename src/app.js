@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
-const cookieParser = require('cookieParser');
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passportLocal = require('passport-local').Strategy;
 require('dotenv').config({path:'../.env'});
@@ -11,12 +11,12 @@ const UserRoutes = require('./routes/user');
 const AuthProdRoutes = require('./routes/authproduct');
 const ProductRoutes = require('./routes/product')
 
-
 const app = express();
+
 app.use(express.json());
-qpp.use(cookieParser(process.env.SECRET || 'Just a Secret!'));
+app.use(cookieParser(process.env.SECRET || 'Just a Secret!'))
 app.use(session({
-  secret: process.env.SECRET;,
+  secret: process.env.SECRET,
   resave: true,
   saveUnitialized: true
 }));
