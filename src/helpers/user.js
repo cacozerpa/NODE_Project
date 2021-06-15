@@ -19,12 +19,12 @@ const getUsersById = async (req,res) => {
     const id = req.params.id;
     const checkId = await pool.query(queries.CHECKID, [id]);
 
-    if(checkId.rows == ''){
+    if(checkId.rows != ''){
         const response = await pool.query(queries.GET_USERBYID, [id]);
         console.log(`Showing User ${id}!`);
         res.status(200).send(response.rows);
     }else{
-        res.status(400).sned(`User ${id} not found!`)
+        res.status(400).send(`User ${id} not found!`)
     }
 
     }catch(err){

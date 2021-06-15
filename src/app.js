@@ -43,7 +43,6 @@ app.use(AuthRoutes);
 app.use(UserRoutes);
 app.use(AuthProdRoutes);
 app.use(ProductRoutes);
-app.use(loggInRoute);
 
 app.get('/', (req, res) => {
     res.render('../public/index.html');

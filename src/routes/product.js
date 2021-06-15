@@ -2,7 +2,7 @@ const {Router} = require('express');
 const { getProducts, getProductsById } = require('../helpers/product');
 const router = Router();
 
-router.get('/users', getProducts);
-router.get('/users/:id', getProductsById);
+router.get('/products', getProducts);
+router.get('/products/:id', getProductsById);
 
 module.exports = router;
