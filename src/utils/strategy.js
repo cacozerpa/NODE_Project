@@ -4,22 +4,15 @@ const bcrypt = require('bcrypt');
 const pool = require('./pool');
 const queries = require('./queries');
 
-const strategy = new localStrategy(async (username, password, done) => {
-  const {username, password} = req.body;
-  const salt = bcrypt.genSaltSync(12);
-  const hashPass = bcrypt.hashSync(password, salt);
-  try{
-    const checkUsername = await pool.query(queries.CHECKUSER, [username]);
-    if(checkUsername.rows == ''){
-      return done(null, false, res.status(400).send('User not Found!'));
-    }else{
-      const checkPassword = await pool.query(queries.CHECKPASS, [password]);
+const localOptions = {
+  usernameField: 'username',
+  passwordField: 'password'
+};
 
-    }
-
-  }catch(err){
-    throw err;
-  }
+const strategy = new localStrategy(localOptions, async (username, password, done) => {
+  console.log(req.body);
+  console.log(username);
+  console.log(password);
 })
 
 module.export ={

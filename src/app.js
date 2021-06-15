@@ -10,6 +10,7 @@ const AuthRoutes = require('./routes/auth');
 const UserRoutes = require('./routes/user');
 const AuthProdRoutes = require('./routes/authproduct');
 const ProductRoutes = require('./routes/product')
+const loggInRoute = require('./routes/userlogin');
 
 const app = express();
 
@@ -23,14 +24,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(fucntion(user, done{
+passport.serializeUser(function(user, done) {
   done(null, user.id);
-}))
+})
 
-passport.deserializeUser(fucntion(user, done{
-  done(null, user.id);
-}))
-
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+})
 
 app.use(express.static('../src/public'));
 
@@ -43,6 +43,7 @@ app.use(AuthRoutes);
 app.use(UserRoutes);
 app.use(AuthProdRoutes);
 app.use(ProductRoutes);
+app.use(loggInRoute);
 
 app.get('/', (req, res) => {
     res.render('../public/index.html');
