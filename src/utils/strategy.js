@@ -1,20 +1,29 @@
 const localStrategy = require('passport-local').Strategy;
 const userHelper = require('../helpers/user');
 const bcrypt = require('bcrypt');
-const pool = require('./pool');
-const queries = require('./queries');
 
 const localOptions = {
   usernameField: 'username',
   passwordField: 'password'
 };
 
-const strategy = new localStrategy(localOptions, async (username, password, done) => {
-  console.log(req.body);
-  console.log(username);
-  console.log(password);
+module.exports = new localStrategy(localOptions, async (username, password, done)=>{
+  try{
+    const user = await userHelper.getUserByUsername(username);
+    if(user != ''){
+      const pass = await bcrypt.compare(password, user.password);
+      if(pass != ''){
+        return done(null, user)
+      }else{
+        return done(null, false, {message: 'Password Incorrect!'})
+      }
+    }else{
+      return done(null, false), {message: 'User not Found!'};
+    }
+  }catch(err){
+    done(err);
+    throw err;
+  }
 })
 
-module.export ={
-  strategy
-}
+

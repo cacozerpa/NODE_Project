@@ -1,6 +1,5 @@
 const pool = require('../utils/pool');
 const queries = require('../utils/queries');
-const bcrypt = require('bcrypt');
 
 const getUsers = async (req, res) =>{
     try{
@@ -33,31 +32,29 @@ const getUsersById = async (req,res) => {
     }
 }
 
-const getUserByUsername = async (req, res) => {
-    try{ 
-        const username = req.body;
-        const response = await pool.query(queries.GET_USERBYUSERNAME, [username]);
+const getUserByUsername = async (username) => {
 
-        if(response.rows == ''){
-            res.status(400).send('Username not found!');
-        }else{
+    try{ 
+       
+        const response = await pool.query(queries.GET_USERBYUSERNAME, [username]);
+        
+        if(response){
             console.log('Username Found!')
+            return ({
+                id: response.rows[0].id,
+                name: response.rows[0].name,
+                username: response.rows[0].username,
+                email: response.rows[0].email,
+                password: response.rows[0].password
+            })
+        }else{
+           console.log('Username Not Found!')
+           return null;
         }
 
     }catch(err){
-        res.status(500).send('Server Error!');
         throw err; 
     }
-}
-
-const comparePass = async (req, res) =>{
-    bcrypt.compare(username, hash, (err, isMatch) => {
-        if(err){
-            res.status(400).send('Password Doesnt Match!');
-        }else{
-            res(isMatch);
-        }
-    })
 }
 
 module.exports = {
