@@ -20,6 +20,7 @@ const querys = {
     //Validation Queries
     CHECKEMAIL: `SELECT * FROM public."Users" WHERE email = $1`,
     CHECKUSER: `SELECT * FROM public."Users" WHERE username = $1`,
+    CHECKPASS:`SELECT * FROM public."Users" WHERE password = $1`,
     CHECKID: `SELECT * FROM public. "Users" WHERE id = $1`,
     CHECKPROD: `SELECT * FROM public. "Products" WHERE prod_name=$1`,
 }

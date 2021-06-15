@@ -3,7 +3,7 @@ const cors = require('cors');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const passportLocal = require('passport-local').Strategy;
+
 require('dotenv').config({path:'../.env'});
 
 const AuthRoutes = require('./routes/auth');
@@ -23,9 +23,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new passportLocal(function(username, password, done){
-
+passport.serializeUser(fucntion(user, done{
+  done(null, user.id);
 }))
+
+passport.deserializeUser(fucntion(user, done{
+  done(null, user.id);
+}))
+
 
 app.use(express.static('../src/public'));
 
