@@ -2,7 +2,7 @@ const pool = require('../utils/pool');
 const bcrypt = require('bcrypt');
 const queries = require('../utils/queries');
 
-const CreateUser = async(req, res) => {
+const createUser = async(req, res) => {
 
     const {name, username, email, password} = req.body;
     

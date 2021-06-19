@@ -27,7 +27,7 @@ const createProd = async (req, res) => {
     }
 }
 
-const UpdateProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
     try{ 
         await pool.query('BEGIN');
         const id = req.params.id;
@@ -77,6 +77,6 @@ const deleteProd = async (req, res) => {
 
 module.exports = {
     createProd,
-    UpdateProduct,
+    updateProduct,
     deleteProd
 }
