@@ -33,7 +33,7 @@ const createUser = async(req, res) => {
     
 }
 
-const UpdateUser = async (req, res) =>{
+const updateUser = async (req, res) =>{
   
     try{ 
     await pool.query('BEGIN'); 
@@ -67,7 +67,7 @@ const UpdateUser = async (req, res) =>{
     }
 }
 
-const DeleteUser = async (req, res) =>{
+const deleteUser = async (req, res) =>{
 
     try{
     await pool.query('BEGIN');
@@ -92,7 +92,7 @@ const DeleteUser = async (req, res) =>{
 }
 
 module.exports = {
-    CreateUser,
-    UpdateUser,
-    DeleteUser
+    createUser,
+    updateUser,
+    deleteUser
 }
