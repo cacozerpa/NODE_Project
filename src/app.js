@@ -19,7 +19,7 @@ app.use(cookieParser(process.env.SECRET || 'Just a Secret!'))
 app.use(session({
   secret: process.env.SECRET || 'Not a Secret!',
   resave: true,
-  saveUnitialized: true
+  saveUninitialized: true,
 }));
 
 passport.use('local', require('./utils/strategy'));
@@ -48,11 +48,7 @@ app.use(AuthRoutes);
 app.use(UserRoutes);
 app.use(AuthProdRoutes);
 app.use(ProductRoutes);
-<<<<<<< Updated upstream
 app.use(LoginRoute);
-=======
-
->>>>>>> Stashed changes
 
 app.get('/', (req, res) => {
     res.render('../public/index.html');

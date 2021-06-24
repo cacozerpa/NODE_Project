@@ -1,16 +1,18 @@
 const isAuth =  (req, res, next) => {
     if(req.isAuthenticated()){
-        next();
+        res.status(400).send('You must be Logged In!');
+        
     }else{
-        res.status(200).send('You must be Logged In!');
+        next();
     }
 }
 
 const isLogged = (req, res, next) => {
     if(req.isAuthenticated()){
-        next();
+        res.status(300).send('You already have a session!');
+    
     }else{
-        res.status(200).send('You must be Logged In!');
+        next();
     }
 }
 
