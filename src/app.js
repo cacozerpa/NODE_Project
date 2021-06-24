@@ -25,12 +25,12 @@ app.use(session({
 passport.use('local', require('./utils/strategy'));
 
 passport.serializeUser(function(user, done) {
-  console.log('este es el maldito usuario que esta loggeado: ' + user.username);
+  console.log('user logged:' + user.username);
   done(null, user);
 })
 
 passport.deserializeUser(function(user, done) {
-  console.log('pilas con esta verga pue: ' + user.id);
+  console.log('User ID: ' + user.id);
   return done(null, user.id);
 })
 
