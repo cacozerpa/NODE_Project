@@ -48,7 +48,11 @@ app.use(AuthRoutes);
 app.use(UserRoutes);
 app.use(AuthProdRoutes);
 app.use(ProductRoutes);
+<<<<<<< Updated upstream
 app.use(LoginRoute);
+=======
+
+>>>>>>> Stashed changes
 
 app.get('/', (req, res) => {
     res.render('../public/index.html');

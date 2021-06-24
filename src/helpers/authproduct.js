@@ -5,7 +5,7 @@ const queries = require('../utils/queries');
 const createProd = async (req, res) => {
 
     const {name, price, description} = req.body;
-
+    
     try{
 
     const checkProd = await pool.query(queries.CHECKPROD, [name]);
@@ -15,7 +15,11 @@ const createProd = async (req, res) => {
     const response = await pool.query(queries.CREATE_PRODUCT, [name, price, description]);
     await pool.query('COMMIT');
     console.log(response.rows);
+<<<<<<< Updated upstream
     res.status(200).send('Product Created!');
+=======
+    res.status(200).send('Product Created!')
+>>>>>>> Stashed changes
     }else{
         res.status(400).send('Product Already Exist!');
         pool.query('ROLLBACK')
@@ -34,9 +38,15 @@ const updateProduct = async (req, res) => {
         const {name, price, description} = req.body;
         const checkId = await pool.query(queries.CHECKID, [id]);
 
+<<<<<<< Updated upstream
         if(checkId.rows != ''){
         const response = await pool.query(queries.UPDATE_PRODUCT, [name, price, description, id]);
         console.log(response);
+=======
+        if(checkId.row != ''){
+        const response = await pool.query(queries.UPDATE_PRODUCT, [name, price, description, id]);
+        console.log(response.rows);
+>>>>>>> Stashed changes
         await pool.query('COMMIT')
         res.status(200).send(`User ${id} Updated!`)
         }else{
