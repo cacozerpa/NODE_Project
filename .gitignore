@@ -1,6 +1,2 @@
-./node_modules
-<<<<<<< Updated upstream
-./.env
-=======
-/.env
->>>>>>> Stashed changes
+/node_modules
+/env
