@@ -24,6 +24,16 @@ const querys = {
     CHECKPASS:`SELECT * FROM public."Users" WHERE password = $1`,
     CHECKID: `SELECT * FROM public. "Users" WHERE id = $1`,
     CHECKPROD: `SELECT * FROM public. "Products" WHERE name=$1`,
+    CHECKBILLID: `SELECT * FROM public. "Bills" WHERE id=$1`,
+
+    //Bill Quereis
+    
+    GET_BILLS: `SELECT * FROM public."Bills"`,
+    CREATE_BILL: `INSERT INTO public."Bills" ( username, total, details) VALUES ($1, $2, $3, $4) RETURNING *`,
+    GET_BILLBYID: `SELECT * FROM public."
+    Bills" WHERE id = $1`,
+    GET_BILLBYUSERNAME: `SELECT * FROM public."Bills" WHERE username = $1`,
+    DELETE_BILL: `DELETE FROM public."Bills" WHERE id = $1`,
 }
 
 module.exports = querys;
