@@ -17,6 +17,29 @@ const createBill = async(req, res) => {
     }
 }
 
+const deleteBill = async (req, res) => {
+    try{
+        await pool.query('BEGIN');
+        const id = req.params.id;
+        const checkId = await pool.query(queries.CHECKBILLID, [id]);
+
+        if(checkId.rows != ''){
+            const response = await pool.query(queries.DELETE_BILL, [id]);
+            await pool.query('COMMIT');
+            console.log(response);
+            res.status(200).send(`Bill ${id} Deleted!`);
+        }else{
+            res.status(400).send(`Bill Id: ${id} not Found!`);
+        }
+    }catch(err){
+
+        await pool.query('ROLLBACK');
+        res.status(500).send('Server Error!')
+        throw err;
+    }
+}
+
 module.exports = {
-    createBill
+    createBill,
+    deleteBill
 }
