@@ -1,10 +1,10 @@
 const pool = require('../utils/pool');
 const queries = require('../utils/queries');
 
-const getBills = async (req, res) => {
+const getOrders = async (req, res) => {
     try{
-        const response = await pool.query(queries.GET_BILLS);
-        console.log('Showing Bills!');
+        const response = await pool.query(queries.GET_ORDERS);
+        console.log('Showing Orders!');
         res.status(200).send(response.rows);
     }catch(err){
         res.status(500).send('Server Error!');
@@ -12,17 +12,17 @@ const getBills = async (req, res) => {
     }
 }
 
-const getBillsById = async (req, res) => {
+const getOrderById = async (req, res) => {
     try{
         const id = req.params.id;
-        const checkId = await pool.query(queries.CHECKBILLID, [id]);
+        const checkId = await pool.query(queries.CHECKORDERID, [id]);
 
         if(checkId.rows != ''){
-            const response = await pool.query(queries.GET_BILLBYID, [id]);
-            console.log(`Showing Bill ${id}`);
+            const response = await pool.query(queries.GET_ORDERBYID, [id]);
+            console.log(`Showing Order ${id}`);
             res.status(200).send(response.rows);
         }else{
-            res.status(400).send(`Bill ${id} not found!`);
+            res.status(400).send(`Order ${id} not found!`);
         }
 
     }catch(err){
@@ -31,19 +31,19 @@ const getBillsById = async (req, res) => {
     }
 }
 
-const getBillByUsername = async (username) => {
+const getOrderByUsername = async (username) => {
     try{
-        const response = await pool.query(queries.GET_BILLBYUSERNAME, [username]);
+        const response = await pool.query(queries.GET_ORDERBYUSERNAME, [username]);
 
         if(response) {
-            console.log('Bill Found!');
+            console.log('Order Found!');
             return ({
                 id: response.rows[0].id,
                 username: response.rows[0].username,
                 detail: response.rows[0].detail
             })
         }else{
-            console.log('Bill not Found!');
+            console.log('Order not Found!');
             return null;
         }
     }catch(err){
@@ -53,7 +53,7 @@ const getBillByUsername = async (username) => {
 }
 
 module.exports = {
-    getBills,
-    getBillByUsername,
-    getBillsById
+    getOrders,
+    getOrderByUsername,
+    getOrderById
 }
