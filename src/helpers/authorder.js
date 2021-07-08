@@ -8,7 +8,7 @@ const createOrder = async(req, res) => {
         await pool.query('BEGIN');
         const response = await pool.query(queries.CREATE_ORDER, [username, total]);
         console.log(response.rows);
-        res.status(200).send('Bill Created!')
+        res.status(200).send('Order Created!')
         await pool.query('COMMIT');
     }catch(err){
         res.status(500).send('Server Error!');
