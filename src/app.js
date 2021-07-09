@@ -13,6 +13,7 @@ const ProductRoutes = require('./routes/product')
 const LoginRoute = require('./routes/userlogin');
 const OrderRoutes = require('./routes/order');
 const AuthOrderRoutes = require('./routes/authorder');
+const OrderDetailsRoutes = require('./routes/orderdetails')
 const AuthOrderDetailsRoutes = require('./routes/authorderdetails')
 
 const app = express();
@@ -54,6 +55,7 @@ app.use(ProductRoutes);
 app.use(LoginRoute);
 app.use(OrderRoutes);
 app.use(AuthOrderRoutes);
+app.use(OrderDetailsRoutes)
 app.use(AuthOrderDetailsRoutes)
 
 app.get('/', (req, res) => {

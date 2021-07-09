@@ -25,7 +25,7 @@ const querys = {
     CHECKID: `SELECT * FROM public. "Users" WHERE id = $1`,
     CHECKPROD: `SELECT * FROM public. "Products" WHERE name=$1`,
     CHECKORDERID: `SELECT * FROM public. "Orders" WHERE order_id=$1`,
-    CHECKORDERDETAILID: `SELECT * FROM public. "Order_details" WHERE id = $1`,
+    CHECKORDERDETAILID: `SELECT * FROM public. "Orderdetails" WHERE id = $1`,
 
     //Order Quereis
     
@@ -39,7 +39,7 @@ const querys = {
 
     GET_ORDERSDETAILS: `SELECT * FROM public. "Orderdetails"`,
     CREATE_ORDERDETAILS: `INSERT INTO public. "Orderdetails" (idorder, qty, prod_id) VALUES ($1, $2, $3) RETURNING *`,
-    GET_ORDERDETAILBYORDERID: `SELECT * FROM public."Orderdetails" WHERE order = $1`,
+    GET_ORDERDETAILBYORDERID: `SELECT * FROM public."Orderdetails" WHERE idorder = $1`,
     DELETE_ORDERDETAIL: `DELETE FROM public. "Orderdetails" WHERE id = $1`,
 }
 
