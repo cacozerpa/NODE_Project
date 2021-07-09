@@ -11,6 +11,8 @@ const UserRoutes = require('./routes/user');
 const AuthProdRoutes = require('./routes/authproduct');
 const ProductRoutes = require('./routes/product')
 const LoginRoute = require('./routes/userlogin');
+const OrderRoutes = require('./routes/order');
+const AuthOrderRoutes = require('./routes/authorder');
 
 const app = express();
 
@@ -49,6 +51,8 @@ app.use(UserRoutes);
 app.use(AuthProdRoutes);
 app.use(ProductRoutes);
 app.use(LoginRoute);
+app.use(OrderRoutes);
+app.use(AuthOrderRoutes);
 
 app.get('/', (req, res) => {
     res.render('../public/index.html');
