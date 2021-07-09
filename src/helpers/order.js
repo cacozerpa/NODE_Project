@@ -14,15 +14,15 @@ const getOrders = async (req, res) => {
 
 const getOrderById = async (req, res) => {
     try{
-        const id = req.params.id;
-        const checkId = await pool.query(queries.CHECKORDERID, [id]);
+        const order_id = req.params.order_id;
+        const checkId = await pool.query(queries.CHECKORDERID, [order_id]);
 
         if(checkId.rows != ''){
-            const response = await pool.query(queries.GET_ORDERBYID, [id]);
-            console.log(`Showing Order ${id}`);
+            const response = await pool.query(queries.GET_ORDERBYID, [order_id]);
+            console.log(`Showing Order ${order_id}`);
             res.status(200).send(response.rows);
         }else{
-            res.status(400).send(`Order ${id} not found!`);
+            res.status(400).send(`Order ${order_id} not found!`);
         }
 
     }catch(err){
