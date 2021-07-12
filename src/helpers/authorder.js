@@ -2,14 +2,25 @@ const pool = require('../utils/pool');
 const queries = require('../utils/queries');
 
 const createOrder = async(req, res) => {
-    const {username, total} = req.body;
+    const {total} = req.body;
+    const id = req.params.id;
 
-    try{
+    try{    
         await pool.query('BEGIN');
-        const response = await pool.query(queries.CREATE_ORDER, [username, total]);
-        console.log(response.rows);
-        res.status(200).send('Order Created!')
-        await pool.query('COMMIT');
+        const user = await pool.query(queries.GET_USERBYID, [id]);
+    
+        console.log(user.rows);
+        if(user.rows != ''){
+            const username = user.rows[0].username;
+            const response = await pool.query(queries.CREATE_ORDER, [username, total]);
+            console.log(response.rows);
+            res.status(200).send('Order Created!')
+            await pool.query('COMMIT');
+        }else{
+            console.log(`User ${id} not found!`)
+            res.status(400).send('Username not found!');
+        }
+        
     }catch(err){
         res.status(500).send('Server Error!');
         await pool.query('ROLLBACK');
