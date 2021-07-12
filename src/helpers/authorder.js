@@ -31,16 +31,17 @@ const createOrder = async(req, res) => {
 const deleteOrder = async (req, res) => {
     try{
         await pool.query('BEGIN');
-        const id = req.params.id;
-        const checkId = await pool.query(queries.CHECKORDERID, [id]);
+        const order_id = req.params.order_id;
+        const checkId = await pool.query(queries.CHECKORDERID, [order_id]);
 
         if(checkId.rows != ''){
-            const response = await pool.query(queries.DELETE_ORDER, [id]);
+            const details = await pool.query(queries.DELETE_ORDERDETAIL, [order_id]);
+            const response = await pool.query(queries.DELETE_ORDER, [order_id]);
             await pool.query('COMMIT');
-            console.log(response);
-            res.status(200).send(`Order ${id} Deleted!`);
+            console.log(response.rows + details.rows);
+            res.status(200).send(`Order ${order_id} Deleted!`);
         }else{
-            res.status(400).send(`Order Id: ${id} not Found!`);
+            res.status(400).send(`Order Id: ${order_id} not Found!`);
         }
     }catch(err){
 

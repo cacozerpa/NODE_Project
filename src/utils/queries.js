@@ -33,14 +33,14 @@ const querys = {
     CREATE_ORDER: `INSERT INTO public."Orders" (username, total) VALUES ($1, $2) RETURNING *`,
     GET_ORDERBYID: `SELECT * FROM public."Orders" WHERE order_id = $1`,
     GET_ORDERBYUSERNAME: `SELECT * FROM public."Orders" WHERE username = $1`,
-    DELETE_ORDER: `DELETE FROM public."Orders" WHERE id = $1`,
+    DELETE_ORDER: `DELETE FROM public."Orders" WHERE order_id = $1`,
 
     //Order_details Queries
 
     GET_ORDERSDETAILS: `SELECT * FROM public. "Orderdetails"`,
     CREATE_ORDERDETAILS: `INSERT INTO public. "Orderdetails" (idorder, qty, prod_id) VALUES ($1, $2, $3) RETURNING *`,
     GET_ORDERDETAILBYORDERID: `SELECT * FROM public."Orderdetails" WHERE idorder = $1`,
-    DELETE_ORDERDETAIL: `DELETE FROM public. "Orderdetails" WHERE id = $1`,
+    DELETE_ORDERDETAIL: `DELETE FROM public. "Orderdetails" WHERE idorder = $1`,
 }
 
 module.exports = querys;
