@@ -5,17 +5,19 @@ const queries = require('../utils/queries');
 const createUser = async(req, res) => {
 
     const {name, username, email, password} = req.body;
+    const role = "CLIENT";
     
         try{
+            await pool.query('BEGIN');
             const checkUser = await pool.query(queries.CHECKUSER, [username]);
             const checkEmail = await pool.query(queries.CHECKEMAIL, [email]);
 
             if(checkUser.rows == ''){
                 if(checkEmail.rows == ''){
-                    await pool.query('BEGIN');
+                    
                     const salt = bcrypt.genSaltSync(12);
                     const HashPass = bcrypt.hashSync(password, salt);
-                    const response = await pool.query(queries.CREATE_USER, [name, username, email, HashPass]);
+                    const response = await pool.query(queries.CREATE_USER, [name, username, email, HashPass, role]);
                     console.log(response.rows);
                     res.status(200).send('User Created!')
                     await pool.query('COMMIT');
