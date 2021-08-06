@@ -19,6 +19,13 @@ const AuthAdminRoute = require('./routes/authadmin');
 
 const app = express();
 
+app.use(cors({
+  origin: true,
+  credentials: true,
+  methods: 'POST, PUT, GET, DELETE, OPTIONS, PATCH',
+  allowedHeaders: 'Accept, Content-Type, Accept-Encoding, Content-Length, Authorization',
+}))
+
 app.use(express.json());
 app.use(cookieParser(process.env.SECRET || 'Just a Secret!'))
 app.use(session({
@@ -64,9 +71,4 @@ app.get('/', (req, res) => {
     res.render('../public/index.html');
 })
 
-app.use(cors({
-    origin: true,
-    credentials: true,
-    methods: 'POST, PUT, GET, DELETE, OPTIONS, PATCH',
-    allowedHeaders: 'Accept, Content-Type, Accept-Encoding, Content-Length, Authorization',
-}))
+

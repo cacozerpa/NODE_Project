@@ -15,13 +15,13 @@ const getUsers = async (req, res) =>{
 const getUsersById = async (req,res) => {
     try{
 
-    const id = req.params.id;
+    const id = req.user;
     const checkId = await pool.query(queries.CHECKID, [id]);
 
     if(checkId.rows != ''){
         const response = await pool.query(queries.GET_USERBYID, [id]);
         console.log(`Showing User ${id}!`);
-        res.status(200).send(response.rows);
+        res.status(200).send(response.rows[0]);
     }else{
         res.status(400).send(`User ${id} not found!`)
     }
