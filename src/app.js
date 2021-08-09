@@ -16,6 +16,7 @@ const AuthOrderRoutes = require('./routes/authorder');
 const OrderDetailsRoutes = require('./routes/orderdetails')
 const AuthOrderDetailsRoutes = require('./routes/authorderdetails')
 const AuthAdminRoute = require('./routes/authadmin');
+const CarRoute = require('./routes/car');
 
 const app = express();
 
@@ -64,8 +65,9 @@ app.use(LoginRoute);
 app.use(OrderRoutes);
 app.use(AuthOrderRoutes);
 app.use(OrderDetailsRoutes)
-app.use(AuthOrderDetailsRoutes)
+app.use(AuthOrderDetailsRoutes);
 app.use(AuthAdminRoute);
+app.use(CarRoute);
 
 app.get('/', (req, res) => {
     res.render('../public/index.html');

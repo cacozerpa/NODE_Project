@@ -25,6 +25,7 @@ const querys = {
     CHECKID: `SELECT * FROM public. "Users" WHERE id = $1`,
     CHECKPROD: `SELECT * FROM public. "Products" WHERE name=$1`,
     CHECKORDERID: `SELECT * FROM public. "Orders" WHERE order_id=$1`,
+    CHECKPRODUCTID: `SELECT * FROM public. "Products" WHERE id=$1`,
     CHECKORDERDETAILID: `SELECT * FROM public. "Orderdetails" WHERE id = $1`,
 
     //Order Quereis
