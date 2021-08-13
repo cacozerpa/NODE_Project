@@ -55,7 +55,7 @@ const updateUser = async (req, res) =>{
     await pool.query('COMMIT');
         }else{
         console.log(checkEmailU.rows);
-        res.status(400).json({message:'Email Existe!'})
+        res.status(400).send('Email Already exist!')
     }
 
     }else{

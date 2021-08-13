@@ -1,9 +1,10 @@
 const pool = require('../utils/pool');
 const queries = require('../utils/queries');
+const orderdetail = require('../helpers/authorderdetails');
 
 const createOrder = async(req, res) => {
-    const {total} = req.body;
-    const id = req.params.id;
+    const date = new Date();
+    const id = req.user;
 
     try{    
         await pool.query('BEGIN');
@@ -12,7 +13,7 @@ const createOrder = async(req, res) => {
         console.log(user.rows);
         if(user.rows != ''){
             const username = user.rows[0].username;
-            const response = await pool.query(queries.CREATE_ORDER, [username, total]);
+            const response = await pool.query(queries.CREATE_ORDER, [username, date]);
             console.log(response.rows);
             res.status(200).send('Order Created!')
             await pool.query('COMMIT');

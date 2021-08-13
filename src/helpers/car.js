@@ -5,16 +5,34 @@ const queries = require('../utils/queries');
 const createCar = async (req, res) => {
     try{
         await pool.query('BEGIN');
+        car = req.session.car;
         const id = req.params.id;
+        const qty = 1;
         const product = await pool.query(queries.GET_PRODUCTBYID, [id]);
         if(product.rows != ''){
             console.log('Product Found!');
-            console.log(req.session);
-            car = req.session.car;
-            car.push({id: product.rows[0].id, name: product.rows[0].name, price: product.rows[0].price});
-            req.session.car = car;
 
-            res.status(200).send(req.session.car);
+            const itemIndex = car.findIndex((element, itemIndex) => {
+                console.log(element.id)
+                if (element.id === product.rows[0].id) {
+                  return element.id;
+                }
+              });
+              if(itemIndex == -1){ 
+                console.log(req.session);
+                
+                car.push({id: product.rows[0].id, name: product.rows[0].name, price: product.rows[0].price, qty: qty});
+                req.session.car = car;
+    
+                res.status(200).send(req.session.car);
+              }else{
+                  const item = car[itemIndex];
+                  item.qty = item.qty + 1;
+                  car[itemIndex] = item;
+                  console.log(car[itemIndex])
+                  res.status(200).send(car[itemIndex]);
+              }
+            
         }else{
             console.log(`Product not found ${id}!`);
             res.status(400).send('Product Not Found!');
