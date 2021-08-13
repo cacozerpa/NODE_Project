@@ -51,7 +51,7 @@ const deleteItem = async (req, res) => {
 
         if(checkId.rows != ''){
             console.log('Product Found!');
-
+            
             car = req.session.car;
             const itemIndex = car.findIndex((element, itemIndex) => {
                 console.log(element.id)
@@ -59,20 +59,28 @@ const deleteItem = async (req, res) => {
                   return element.id;
                 }
               });
+
             console.log("el index: " + itemIndex);
+            
             if(itemIndex != -1){
+                const item = car[itemIndex];
+                if(item.qty === 1 ){
             car.splice(itemIndex, 1);
-            console.log(req.session);
             res.status(200).send('Product Deleted!')
         }else{
-            console.log('Product not found in the car!')
-            res.status(400).send(`Product not Found in the car! a ${checkId.rows[0].product_name}, ${id}`)
+            item.qty = item.qty - 1;
+            car[itemIndex] = item;
+            res.status(200).send(car[itemIndex]);
         }
 
         }else{
             console.log(`Item not found!`);
             res.status(400).send('Item not found!')
         }
+    }else{
+        console.log('Product not found!')
+        res.status(400).send(`Product not Found  ${checkId.rows[0].product_name}, ${id}`)
+    }
     }catch(err){
         res.status(500).send("el error" + err)
         throw err;
