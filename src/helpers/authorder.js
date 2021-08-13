@@ -1,11 +1,9 @@
 const pool = require('../utils/pool');
 const queries = require('../utils/queries');
-const orderdetail = require('../helpers/authorderdetails');
 
-const createOrder = async(req, res) => {
+const createOrder = async(user) => {
     const date = new Date();
-    const id = req.user;
-
+    const id = user;
     try{    
         await pool.query('BEGIN');
         const user = await pool.query(queries.GET_USERBYID, [id]);
@@ -14,16 +12,17 @@ const createOrder = async(req, res) => {
         if(user.rows != ''){
             const username = user.rows[0].username;
             const response = await pool.query(queries.CREATE_ORDER, [username, date]);
-            console.log(response.rows);
-            res.status(200).send('Order Created!')
             await pool.query('COMMIT');
+            if(response){
+                return({
+                    id: response.rows[0].order_id
+                })
+            }
         }else{
             console.log(`User ${id} not found!`)
-            res.status(400).send('Username not found!');
         }
         
     }catch(err){
-        res.status(500).send('Server Error!');
         await pool.query('ROLLBACK');
         throw err;
     }
