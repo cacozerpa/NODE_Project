@@ -4,7 +4,7 @@ const queries = require('../utils/queries');
 
 const createUser = async(req, res) => {
 
-    const {name, username, email, password} = req.body;
+    const {name, username, email, password, direccion} = req.body;
     const role = "CLIENT";
     
         try{
@@ -17,7 +17,7 @@ const createUser = async(req, res) => {
                     
                     const salt = bcrypt.genSaltSync(12);
                     const HashPass = bcrypt.hashSync(password, salt);
-                    const response = await pool.query(queries.CREATE_USER, [name, username, email, HashPass, role]);
+                    const response = await pool.query(queries.CREATE_USER, [name, username, email, HashPass, role, direccion]);
                     console.log(response.rows);
                     res.status(200).send('User Created!')
                     await pool.query('COMMIT');
@@ -39,7 +39,7 @@ const updateUser = async (req, res) =>{
   
     try{ 
     await pool.query('BEGIN'); 
-    const id = req.params.id;
+    const id = req.user;
     const {email} = req.body;
     
     const checkIdU = await pool.query(queries.CHECKID, [id]);
@@ -55,7 +55,7 @@ const updateUser = async (req, res) =>{
     await pool.query('COMMIT');
         }else{
         console.log(checkEmailU.rows);
-        res.status(400).send('This email already Exist!')
+        res.status(400).json({message:'Email Existe!'})
     }
 
     }else{
