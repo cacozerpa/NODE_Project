@@ -31,7 +31,7 @@ const querys = {
     //Order Quereis
     
     GET_ORDERS: `SELECT * FROM public."Orders"`,
-    CREATE_ORDER: `INSERT INTO public."Orders" (username, date) VALUES ($1, $2) RETURNING *`,
+    CREATE_ORDER: `INSERT INTO public."Orders" (username, date, total) VALUES ($1, $2, $3) RETURNING *`,
     GET_ORDERBYID: `SELECT * FROM public."Orders" WHERE order_id = $1`,
     GET_ORDERBYUSERNAME: `SELECT * FROM public."Orders" WHERE username = $1`,
     DELETE_ORDER: `DELETE FROM public."Orders" WHERE order_id = $1`,

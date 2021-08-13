@@ -1,7 +1,7 @@
 const pool = require('../utils/pool');
 const queries = require('../utils/queries');
 
-const createOrder = async(user) => {
+const createOrder = async(user, total) => {
     const date = new Date();
     const id = user;
     try{    
@@ -11,7 +11,7 @@ const createOrder = async(user) => {
         console.log(user.rows);
         if(user.rows != ''){
             const username = user.rows[0].username;
-            const response = await pool.query(queries.CREATE_ORDER, [username, date]);
+            const response = await pool.query(queries.CREATE_ORDER, [username, date, total]);
             await pool.query('COMMIT');
             if(response){
                 return({

@@ -4,8 +4,9 @@ const order = require('../helpers/authorder');
 
 const createOrderDetail = async (req, res) => {
     const user = req.user;
+    const {total} = req.body;
     car = req.session.car;
-    data = await order.createOrder(user);
+    data = await order.createOrder(user, total);
     orderId = data.id;
 
     for(var i = 0; i < car.length; i++){

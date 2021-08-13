@@ -31,20 +31,17 @@ const getOrderById = async (req, res) => {
     }
 }
 
-const getOrderByUsername = async (username) => {
+const getOrderByUsername = async (req, res) => {
+    id = req.user;
+
     try{
+        const user = await pool.query(queries.GET_USERBYID, [id]);
+        const username = user.rows[0].username;
         const response = await pool.query(queries.GET_ORDERBYUSERNAME, [username]);
 
-        if(response) {
-            console.log('Order Found!');
-            return ({
-                id: response.rows[0].id,
-                username: response.rows[0].username,
-                detail: response.rows[0].detail
-            })
-        }else{
-            console.log('Order not Found!');
-            return null;
+        if(response.rows != ''){
+            console.log(response.rows);
+            res.status(200).send(response.rows);
         }
     }catch(err){
         res.status(500).send('Server Error!')
