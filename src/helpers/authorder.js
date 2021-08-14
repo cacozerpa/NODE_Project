@@ -39,6 +39,7 @@ const deleteOrder = async (req, res) => {
             const response = await pool.query(queries.DELETE_ORDER, [order_id]);
             await pool.query('COMMIT');
             console.log(response.rows + details.rows);
+            console.log(`Order ${order_id} deleted!`)
             res.status(200).send(`Order ${order_id} Deleted!`);
         }else{
             res.status(400).send(`Order Id: ${order_id} not Found!`);
