@@ -4,6 +4,6 @@ const { createOrderDetail } = require('../helpers/authorderdetails');
 const router = Router();
 
 router.post('/createorder', createOrderDetail);
-router.delete('/deleteorders/:order_id', deleteOrder);
+router.delete('/deleteorder/:order_id', deleteOrder);
 
 module.exports = router;
