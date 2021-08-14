@@ -39,7 +39,7 @@ const querys = {
     //Order_details Queries
 
     GET_ORDERSDETAILS: `SELECT * FROM public. "Orderdetails"`,
-    CREATE_ORDERDETAILS: `INSERT INTO public. "Orderdetails"  (idorder, qty, prod_id) VALUES ($1, $2, $3) RETURNING *`,
+    CREATE_ORDERDETAILS: `INSERT INTO public. "Orderdetails"  (idorder, qty, prod_id, prod_name, prod_price, total) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
     GET_ORDERDETAILBYORDERID: `SELECT * FROM public."Orderdetails" WHERE idorder = $1`,
     DELETE_ORDERDETAIL: `DELETE FROM public. "Orderdetails" WHERE idorder = $1`,
 }

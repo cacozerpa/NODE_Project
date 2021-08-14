@@ -12,14 +12,18 @@ const createOrderDetail = async (req, res) => {
     for(var i = 0; i < car.length; i++){
          prod_id = car[i].id
          qty = car[i].qty;
+
          try{
             await pool.query('BEGIN');
+
             const order = await pool.query(queries.GET_ORDERBYID, [orderId]);
+            const product = await pool.query(queries.GET_PRODUCTBYID, [prod_id]);
+            const name = product.rows[0].name;
+            const price = product.rows[0].price;
     
             if(order.rows != ''){
-                const response = await pool.query(queries.CREATE_ORDERDETAILS, [orderId, qty, prod_id]);
+                const response = await pool.query(queries.CREATE_ORDERDETAILS, [orderId, qty, prod_id, name, price, total]);
                 console.log(response.rows);
-                
                 await pool.query('COMMIT');
             }else{
                 console.log(`Order ${id} doesnt exist!`);

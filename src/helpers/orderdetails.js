@@ -20,6 +20,7 @@ const getOrderByOrderId = async (req, res) => {
         if(checkId.rows != ''){
             const response = await pool.query(queries.GET_ORDERDETAILBYORDERID, [id]);
             console.log(`Showing Order ${id}`);
+            console.log(response.rows)
             res.status(200).send(response.rows);
         }else{
             res.status(400).send(`Order Detail ${id} not found!`);
