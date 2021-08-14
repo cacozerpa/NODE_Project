@@ -40,6 +40,58 @@ const createOrderDetail = async (req, res) => {
    
 }
 
+const deleteOrderDetail = async (req, res) => {
+    id = req.params.id;
+    try{
+        await pool.query('BEGIN');
+        const detail = await pool.query(queries.CHECKORDERDETAILID, [id]);
+        qty = detail.rows[0].qty;
+
+        if(detail.rows != ''){
+            if(qty == 1){
+                const response = await pool.query(queries.DELETE_DETAIL, [id]);
+                console.log(`Detail eliminated! ${response}`);
+                res.status(200).send('Detail eliminated!')
+                await pool.query('COMMIT');
+            }else{
+                qty = qty - 1;
+                const detailUpdate = await pool.query(queries.UPDATE_DETAIL, [qty, id])
+                await pool.query('COMMIT');
+                res.status(200).send('Item deleted!');
+            }
+        }else{
+            console.log('Detail not found!');
+            res.status(400).send('Detail not found!')
+        }
+        
+    }catch(err){    
+        await pool.query('ROLLBACK');
+        res.status(500).send('Server Error!')
+        throw err;
+    }
+}
+
+const updateDetail = async (req, res) => {
+    const {qty, prod_price} = req.body;
+    id = req.params.id;
+    try{
+        const detail = await pool.query(queries.CHECKORDERDETAILID, [id]);
+        
+        if(detail.rows != ''){
+            const response = pool.query(queries.UPDATE_DETAIL, [qty, prod_price, id])
+        }else{
+            console.log('Detail not found!');
+            res.status(400).send('Detail not found!')
+        }
+    }catch(err){
+        await pool.query('ROLLBACK');
+        res.status(500).send('Server Error');
+        throw err;
+    }
+}
+
 module.exports = {
-    createOrderDetail
+    createOrderDetail,
+    deleteOrderDetail,
+    updateDetail
 }

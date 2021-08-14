@@ -38,7 +38,7 @@ const getUserByUsername = async (username) => {
     try{ 
        
         const response = await pool.query(queries.GET_USERBYUSERNAME, [username]);
-        
+
         if(response){
             console.log('Username Found!')
             return ({
@@ -46,7 +46,8 @@ const getUserByUsername = async (username) => {
                 name: response.rows[0].name,
                 username: response.rows[0].username,
                 email: response.rows[0].email,
-                password: response.rows[0].password
+                password: response.rows[0].password,
+                role: response.rows[0].role
             })
         }else{
            console.log('Username Not Found!')

@@ -42,6 +42,8 @@ const querys = {
     CREATE_ORDERDETAILS: `INSERT INTO public. "Orderdetails"  (idorder, qty, prod_id, prod_name, prod_price, total) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
     GET_ORDERDETAILBYORDERID: `SELECT * FROM public."Orderdetails" WHERE idorder = $1`,
     DELETE_ORDERDETAIL: `DELETE FROM public. "Orderdetails" WHERE idorder = $1`,
+    DELETE_DETAIL: `DELETE FROM public. "Orderdetails" WHERE id = $1`,
+    UPDATE_DETAIL: `UPDATE public. "Orderdetails" SET qty = $1 WHERE id = $2 RETURNING *`
 }
 
 module.exports = querys;

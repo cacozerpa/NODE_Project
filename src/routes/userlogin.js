@@ -6,8 +6,13 @@ const {isAuth, isLogged} = require('../validations/auth');
 
 router.post('/login', isLogged, passport.authenticate('local') , async(req, res) => {
     req.session.car = [];
-    console.log(req.session)
-    res.status(200).send('User Logged in!');
+    role = req.user.role;
+    if(role == 'ClIENT'){
+    res.status(200).send(`User Logged in! As ${role}`);
+    }else{
+        res.status(201).send(`User Logged in! As ${role}`);
+    }
+    
 });
 
 router.get('/logout', isAuth, (req, res) => {
