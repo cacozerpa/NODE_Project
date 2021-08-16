@@ -20,9 +20,10 @@ const createOrderDetail = async (req, res) => {
             const product = await pool.query(queries.GET_PRODUCTBYID, [prod_id]);
             const name = product.rows[0].name;
             const price = product.rows[0].price;
+            const img = product.rows[0].img;
     
             if(order.rows != ''){
-                const response = await pool.query(queries.CREATE_ORDERDETAILS, [orderId, qty, prod_id, name, price, total]);
+                const response = await pool.query(queries.CREATE_ORDERDETAILS, [orderId, qty, prod_id, name, price, total, img]);
                 console.log(response.rows);
                 await pool.query('COMMIT');
             }else{

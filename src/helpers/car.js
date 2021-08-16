@@ -22,7 +22,7 @@ const createCar = async (req, res) => {
               if(itemIndex == -1){ 
                 console.log(req.session);
                 
-                car.push({id: product.rows[0].id, name: product.rows[0].name, price: product.rows[0].price, qty: qty});
+                car.push({id: product.rows[0].id, name: product.rows[0].name, price: product.rows[0].price, qty: qty, img:product.rows[0].img});
                 req.session.car = car;
     
                 res.status(200).send(req.session.car);
