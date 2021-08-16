@@ -16,12 +16,12 @@ const getProductsById = async (req,res) => {
     try{
 
     const id = req.params.id;
-    const checkId = await pool.query(queries.CHECKID, [id]);
+    const checkId = await pool.query(queries.CHECKPRODUCTID, [id]);
 
     if(checkId.rows != ''){
         const response = await pool.query(queries.GET_PRODUCTBYID, [id]);
         console.log(`Showing Product ${id}!`);
-        res.status(200).send(response.rows);    
+        res.status(200).send(response.rows[0]);    
     }else{
         res.status(400).send(`Product ${id} not found!`)
     }

@@ -4,7 +4,7 @@ const queries = require('../utils/queries');
 
 const createProd = async (req, res) => {
 
-    const {name, price, description} = req.body;
+    const {name, price, description, img} = req.body;
     
     try{
 
@@ -12,7 +12,7 @@ const createProd = async (req, res) => {
 
     if(checkProd.rows == ''){
     await pool.query('BEGIN');
-    const response = await pool.query(queries.CREATE_PRODUCT, [name, price, description]);
+    const response = await pool.query(queries.CREATE_PRODUCT, [name, price, description, img]);
     await pool.query('COMMIT');
     console.log(response.rows);
     res.status(200).send('Product Created!')
@@ -31,12 +31,12 @@ const updateProduct = async (req, res) => {
     try{ 
         await pool.query('BEGIN');
         const id = req.params.id;
-        const {name, price, description} = req.body;
-        const checkId = await pool.query(queries.CHECKID, [id]);
+        const {name, price, description, img} = req.body;
+        const checkId = await pool.query(queries.CHECKPRODUCTID, [id]);
 
         if(checkId.rows != ''){
-        const response = await pool.query(queries.UPDATE_PRODUCT, [name, price, description, id]);
-        console.log(response);
+        const response = await pool.query(queries.UPDATE_PRODUCT, [name, price, description, img, id]);
+        console.log(response.rows);
         await pool.query('COMMIT')
         res.status(200).send(`User ${id} Updated!`)
         }else{

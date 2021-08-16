@@ -13,9 +13,9 @@ const querys = {
 
     //Product Queries
     GET_PRODUCTS: `SELECT * FROM public."Products"`,
-    CREATE_PRODUCT: `INSERT INTO public."Products" (name, price, description) VALUES ($1, $2, $3) RETURNING *`,
+    CREATE_PRODUCT: `INSERT INTO public."Products" (name, price, description, img) VALUES ($1, $2, $3, $4) RETURNING *`,
     GET_PRODUCTBYID:`SELECT * FROM public."Products" WHERE id = $1`,
-    UPDATE_PRODUCT: `UPDATE public."Products" SET name = $1, price = $2, description = $3 WHERE id= $4 RETURNING *`,
+    UPDATE_PRODUCT: `UPDATE public."Products" SET name = $1, price = $2, description = $3, img = $4 WHERE id= $5 RETURNING *`,
     DELETE_PRODUCT: `DELETE FROM public."Products" WHERE id = $1`,
 
     //Validation Queries
