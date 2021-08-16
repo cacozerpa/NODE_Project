@@ -52,7 +52,33 @@ const deleteOrder = async (req, res) => {
     }
 }
 
+const deleteOrderUser = async (username) => {
+    try{
+            await pool.query('BEGIN');
+            const order = await pool.query(queries.GET_ORDERBYUSERNAME, [username]);
+            console.log(order.rows);
+
+            if(order.rows != ''){
+                const orderid = order.rows[0].order_id;
+                const details = await pool.query(queries.DELETE_ORDERDETAIL, [orderid]);
+                const response = await pool.query(queries.DELETE_ORDERUSER, [username]);
+                await pool.query('COMMIT');
+                
+                console.log(response.rows + details.rows);
+            }else{
+                console.log("User Has no oders!");
+                await pool.query('ROLLBACK')
+            }
+      
+    }catch(err){
+
+        await pool.query('ROLLBACK');
+        throw err;
+    }
+}
+
 module.exports = {
     createOrder,
-    deleteOrder
+    deleteOrder,
+    deleteOrderUser
 }

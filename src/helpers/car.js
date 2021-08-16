@@ -18,6 +18,7 @@ const createCar = async (req, res) => {
                   return element.id;
                 }
               });
+              
               if(itemIndex == -1){ 
                 console.log(req.session);
                 

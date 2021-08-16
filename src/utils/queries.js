@@ -6,6 +6,7 @@ const querys = {
     GET_USERBYID: `SELECT * FROM public."Users" WHERE id = $1`,
     GET_USERBYUSERNAME: `SELECT * FROM public."Users" WHERE username = $1`,
     UPDATE_USER: `UPDATE public."Users" SET email = $1 WHERE id= $2 RETURNING *`,
+    ADMIN_UPDATE:`UPDATE public."Users" SET name = $1, direccion = $2 WHERE id= $3 RETURNING *`,
     DELETE_USER: `DELETE FROM public."Users" WHERE id = $1`,
 
     //LogIn
@@ -25,6 +26,7 @@ const querys = {
     CHECKID: `SELECT * FROM public. "Users" WHERE id = $1`,
     CHECKPROD: `SELECT * FROM public. "Products" WHERE name=$1`,
     CHECKORDERID: `SELECT * FROM public. "Orders" WHERE order_id=$1`,
+    CHECKUSERNAME: `SELECT * FROM public. "Users" WHERE username = $1`,
     CHECKPRODUCTID: `SELECT * FROM public. "Products" WHERE id=$1`,
     CHECKORDERDETAILID: `SELECT * FROM public. "Orderdetails" WHERE id = $1`,
 
@@ -35,6 +37,7 @@ const querys = {
     GET_ORDERBYID: `SELECT * FROM public."Orders" WHERE order_id = $1`,
     GET_ORDERBYUSERNAME: `SELECT * FROM public."Orders" WHERE username = $1`,
     DELETE_ORDER: `DELETE FROM public."Orders" WHERE order_id = $1`,
+    DELETE_ORDERUSER: `DELETE FROM public. "Orders" WHERE username = $1`,
 
     //Order_details Queries
 

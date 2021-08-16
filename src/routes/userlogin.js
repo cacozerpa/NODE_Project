@@ -8,6 +8,7 @@ router.post('/login', isLogged, passport.authenticate('local') , async(req, res)
     req.session.car = [];
     const role = req.user.role;
     if(role == "CLIENT"){
+    console.log(req.session)
     res.status(200).send(`User Logged in! As ${role}`);
     }else{
         res.status(201).send(`User Logged in! As ${role}`);

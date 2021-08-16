@@ -56,7 +56,7 @@ const deleteProd = async (req, res) => {
     try{
     await pool.query('BEGIN');
     const id = req.params.id;
-    const checkId = await pool.query(queries.CHECKID, [id]);
+    const checkId = await pool.query(queries.CHECKPRODUCTID, [id]);
 
     if(checkId.rows != ''){
         const response = await pool.query(queries.DELETE_PRODUCT, [id]);
