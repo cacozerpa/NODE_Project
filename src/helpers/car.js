@@ -88,7 +88,80 @@ const deleteItem = async (req, res) => {
     }
 }
 
+const getItem = async (req, res) => {
+    const id = req.params.id;
+    try{
+        
+        await pool.query('BEGIN')
+        const checkId = await db.query(queries.CHECKPRODUCTID, [id]);
+
+        car = req.session.car;
+
+        const itemIndex = car.findIndex((element, itemIndex) => {
+            console.log(element.id)
+            if (element.id === checkId.rows[0].id) {
+              return element.id;
+            }
+          });
+
+          if(itemIndex != -1){
+            const item = car[itemIndex];
+          
+            const obj = {
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                qty: item.qty
+            }
+            res.status(200).send(obj)
+    }else{
+        console.log(`Item not found!`);
+        res.status(400).send('Item not found!')
+    }
+    }catch(err){
+        res.status(500).send("el error" + err)
+        throw err;
+    }
+}
+
+const updateItem = async (req, res) => {
+     const id = req.params.id;
+     const {qty} = req.body;
+     console.log(qty)
+    try{
+
+        await pool.query('BEGIN')
+        const checkId = await db.query(queries.CHECKPRODUCTID, [id]);
+
+        car = req.session.car;
+
+        const itemIndex = car.findIndex((element, itemIndex) => {
+            console.log(element.id)
+            if (element.id === checkId.rows[0].id) {
+              return element.id;
+            }
+          });
+
+          if(itemIndex != -1){
+            const item = car[itemIndex];
+            item.qty = qty;
+            car[itemIndex] = item;
+            console.log(car)
+            res.status(200).send('Item Updated')
+    }else{
+        console.log(`Item not found!`);
+        res.status(400).send('Item not found!')
+    }
+        
+    }catch(err){
+        res.status(500).send('Server Error!')
+        throw err;
+    }
+}
+
 module.exports = {
     createCar,
-    deleteItem
+    deleteItem,
+    getItem,
+    updateItem
 }

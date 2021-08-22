@@ -2,7 +2,7 @@ const pool = require('../utils/pool');
 const queries = require('../utils/queries');
 
 const createOrder = async(user, total) => {
-    const date = new Date();
+    const date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
     const id = user;
     try{    
         await pool.query('BEGIN');
